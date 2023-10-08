@@ -7,6 +7,7 @@ Created on Sun Oct  8 07:55:22 2023
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import pandas as pd
 import sys
 import time
@@ -28,6 +29,9 @@ def tr(x,y):
         [          0,          0, 1.0]
         ])
 
+def drawCircle(ax, x, y, r):
+    ax.add_patch(patches.Circle((x,y), radius=r, fill=False))
+        
 def drawLine(ax,x0,y0,x1,y1,color='blue'):
     ax.plot(np.array([x0,x1]),np.array([y0,y1]),color=color)
 
@@ -72,7 +76,6 @@ class RollingCircle:
         
         self.c = self.rotate @ circle(rs)
         self.pxy = self.rotate @ self.pxy_ini
-        
         self.track = np.hstack((self.track, self.pxy))
 
     def dot(self,H):
@@ -81,10 +84,7 @@ class RollingCircle:
     def draw(self,ax):
         ax.scatter(self.c[0],self.c[1],s=0.1)
         ax.scatter(self.pxy[0],self.pxy[1])
-        
-        
-
-        #self.track.append(np.array(line[:,1]))
+        ax.plot(self.track[0],self.track[1])
 
 view = tr(0,0)
 sc = RollingCircle(rc+rs,0,0)
@@ -99,7 +99,8 @@ for th in np.linspace(0,np.pi*2,NUM):
     sc.setPos(x,y,th)
 
     sc.draw(ax)
-    ax.plot(cc[0],cc[1])
+    # ax.plot(cc[0],cc[1])
+    drawCircle(ax, 0,0, rc)
 
     ax.set_xlim([-500,500])
     ax.set_ylim([-500,500])
