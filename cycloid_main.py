@@ -63,10 +63,7 @@ class RollingCircle:
     def __init__(self,x,y,th):
         self.center_ini = np.array([[rs+rc],[0],[1]])
         self.pxy_ini = np.array([[rs],[0],[1]])
-        self.track = self.pxy_ini * 1 ##copy to track
-        
-        #self.setPos(x,y,th)
-        
+        self.track = tr(rs+rc,0) @ self.pxy_ini
 
     def setPos(self,x,y,th):
         self.x = x
@@ -75,15 +72,11 @@ class RollingCircle:
         ths = (rc+rs)*2*np.pi / (rs*2*np.pi) * th
         self.rotate = tr(x,y) @ rotZ(-ths)
         
-        self.c = self.rotate @ np.array([[rs+rc],[0],[1]])#circle(rs)
         self.pxy = self.rotate @ self.pxy_ini
         self.track = np.hstack((self.track, self.pxy))
 
-    def dot(self,H):
-        self.rotate = H @ self.rotate
-    
     def draw(self,ax):
-        ax.scatter(self.c[0],self.c[1],s=0.1)
+        drawCircle(ax, self.x, self.y, rs)
         ax.scatter(self.pxy[0],self.pxy[1])
         ax.plot(self.track[0],self.track[1])
 
@@ -96,11 +89,9 @@ for th in np.linspace(0,np.pi*2,NUM):
 
     x = (rc + rs) * np.cos(th)
     y = (rc + rs) * np.sin(th)
-    # print(f'{x},{y}')
     sc.setPos(x,y,th)
 
     sc.draw(ax)
-    # ax.plot(cc[0],cc[1])
     drawCircle(ax, 0,0, rc)
 
     ax.set_xlim([-500,500])
