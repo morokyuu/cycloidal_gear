@@ -61,7 +61,7 @@ def circle(r):
 
 class RollingCircle:
     def __init__(self,x,y,th):
-        
+        self.center_ini = np.array([[rs+rc],[0],[1]])
         self.pxy_ini = np.array([[rs],[0],[1]])
         self.track = self.pxy_ini * 1 ##copy to track
         
@@ -72,9 +72,10 @@ class RollingCircle:
         self.x = x
         self.y = y
         self.th = th
-        self.rotate = tr(x,y) @ rotZ(-th*3)
+        ths = (rc+rs)*2*np.pi / (rs*2*np.pi) * th
+        self.rotate = tr(x,y) @ rotZ(-ths)
         
-        self.c = self.rotate @ circle(rs)
+        self.c = self.rotate @ np.array([[rs+rc],[0],[1]])#circle(rs)
         self.pxy = self.rotate @ self.pxy_ini
         self.track = np.hstack((self.track, self.pxy))
 
