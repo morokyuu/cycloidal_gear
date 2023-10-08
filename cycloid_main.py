@@ -42,11 +42,12 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-rc = 240
-rs = 30
+rc = 600
+rs = 120
 L = 100
 Lx = 55
 NUM = 100
+GRRANGE = 800
 
 def circle(r):
     PITCH = 300
@@ -63,7 +64,7 @@ class RollingCircle:
     def __init__(self,x,y,th):
         self.center_ini = np.array([[-rs+rc],[0],[1]])
         
-        self.pxy_ini = np.array([[rs*0.6],[0],[1]])
+        self.pxy_ini = np.array([[rs*0.5],[0],[1]])
         self.track = tr(-rs+rc,0) @ self.pxy_ini
         
 
@@ -72,7 +73,7 @@ class RollingCircle:
         self.y = y
         self.th = th
         ths = (-rs+rc)*2*np.pi / (rs*2*np.pi) * th
-        self.rotate = tr(x,y) @ rotZ(-ths)
+        self.rotate = tr(x,y) @ rotZ(ths)
         
         self.pxy = self.rotate @ self.pxy_ini
         self.track = np.hstack((self.track, self.pxy))
@@ -96,8 +97,8 @@ for th in np.linspace(0,np.pi*2,NUM):
     sc.draw(ax)
     drawCircle(ax, 0,0, rc)
 
-    ax.set_xlim([-500,500])
-    ax.set_ylim([-500,500])
+    ax.set_xlim([-GRRANGE,GRRANGE])
+    ax.set_ylim([-GRRANGE,GRRANGE])
     ax.set_aspect('equal')
     ax.grid()
     
