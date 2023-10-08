@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import sys
+import time
 
 def rotZ(th):
     return np.array([
@@ -53,6 +54,13 @@ def circle(r):
 
 class RollingCircle:
     def __init__(self,x,y,th):
+        #self.pxy = np.array([[rs],[0],[1]])
+        self.track = []
+        self.set(x,y,th)
+
+    def set(self,x,y,th):
+        self.x = x
+        self.y = y
         self.th = th
         self.rotate = tr(x,y) @ rotZ(-th*3)
 
@@ -71,17 +79,22 @@ class RollingCircle:
         ax.scatter(c[0],c[1],s=0.1)
         ax.plot(line[0],line[1])
 
+        #self.track.append(np.array(line[:,1]))
+
 view = tr(0,0)
-track = np.array([[rs],[0],[1]])
+#track = np.array([[rs],[0],[1]])
+#track = []
+sc = RollingCircle(rc+rs,0,0)
 
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
     x = (rc + rs) * np.cos(th)
     y = (rc + rs) * np.sin(th)
-    sc = RollingCircle(x,y,th)
+    sc.set(x,y,th)
 
     sc.draw(ax)
+#    sc.getTrack(ax,track)
     # newpxy = sc.getTrack(ax,track[:,0])
     # track = np.hstack((track,newpxy))
     # ax.plot(track[0],track[1])
@@ -97,6 +110,7 @@ for th in np.linspace(0,np.pi*2,NUM):
     
     plt.show()
     
+    plt.clf()
     plt.close()
 #    break
 
