@@ -42,8 +42,8 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-rc = 200
-rs = 100
+rc = 240
+rs = 30
 L = 100
 Lx = 55
 NUM = 100
@@ -61,15 +61,17 @@ def circle(r):
 
 class RollingCircle:
     def __init__(self,x,y,th):
-        self.center_ini = np.array([[rs+rc],[0],[1]])
-        self.pxy_ini = np.array([[rs],[0],[1]])
-        self.track = tr(rs+rc,0) @ self.pxy_ini
+        self.center_ini = np.array([[-rs+rc],[0],[1]])
+        
+        self.pxy_ini = np.array([[rs*0.6],[0],[1]])
+        self.track = tr(-rs+rc,0) @ self.pxy_ini
+        
 
     def setPos(self,x,y,th):
         self.x = x
         self.y = y
         self.th = th
-        ths = (rc+rs)*2*np.pi / (rs*2*np.pi) * th
+        ths = (-rs+rc)*2*np.pi / (rs*2*np.pi) * th
         self.rotate = tr(x,y) @ rotZ(-ths)
         
         self.pxy = self.rotate @ self.pxy_ini
@@ -81,14 +83,14 @@ class RollingCircle:
         ax.plot(self.track[0],self.track[1])
 
 view = tr(0,0)
-sc = RollingCircle(rc+rs,0,0)
+sc = RollingCircle(-rs+rc,0,0)
 cc = circle(rc)
 
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
-    x = (rc + rs) * np.cos(th)
-    y = (rc + rs) * np.sin(th)
+    x = (-rs + rc) * np.cos(th)
+    y = (-rs + rc) * np.sin(th)
     sc.setPos(x,y,th)
 
     sc.draw(ax)
