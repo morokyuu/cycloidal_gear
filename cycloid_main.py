@@ -49,29 +49,17 @@ Lx = 55
 NUM = 100
 GRRANGE = 800
 
-def circle(r):
-    PITCH = 300
-    d = np.linspace(0,np.pi*2,PITCH)
-    circle = np.array([
-        r * np.cos(d),
-        r * np.sin(d),
-        np.ones(PITCH)
-        ])
-    return circle
-
 
 class RollingCircle:
-    def __init__(self,x,y,th):
-        self.center_ini = np.array([[-rs+rc],[0],[1]])
-        
+    def __init__(self,x,y):
         self.pxy_ini = np.array([[rs*0.5],[0],[1]])
-        self.track = tr(-rs+rc,0) @ self.pxy_ini
-        
+        self.track = tr(x,y) @ self.pxy_ini
 
-    def setPos(self,x,y,th):
+    def setPos(self,th):
+        x = (-rs + rc) * np.cos(th)
+        y = (-rs + rc) * np.sin(th)
         self.x = x
         self.y = y
-        self.th = th
         ths = (-rs+rc)*2*np.pi / (rs*2*np.pi) * th
         self.rotate = tr(x,y) @ rotZ(ths)
         
@@ -84,17 +72,19 @@ class RollingCircle:
         ax.plot(self.track[0],self.track[1])
 
 view = tr(0,0)
-sc = RollingCircle(-rs+rc,0,0)
+sc = RollingCircle(-rs+rc,0)
+sc1 = RollingCircle(-rs+rc,10)
 cc = circle(rc)
 
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
-    x = (-rs + rc) * np.cos(th)
-    y = (-rs + rc) * np.sin(th)
-    sc.setPos(x,y,th)
-
+    sc.setPos(th)
     sc.draw(ax)
+
+    sc1.setPos(th+np.pi*2/5.0)
+    sc1.draw(ax)
+
     drawCircle(ax, 0,0, rc)
 
     ax.set_xlim([-GRRANGE,GRRANGE])
