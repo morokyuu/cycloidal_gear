@@ -53,20 +53,19 @@ GRRANGE = 800
 class RollingCircle:
     def __init__(self,th):
         self.pxy_ini = np.array([[rs*0.5],[0],[1]])
-        self.ROT = (rs+rc)*2*np.pi / (rs*2*np.pi)
-        self.track = rotZ(th) @ tr(-rs+rc,0) @ rotZ(self.ROT*th) @ self.pxy_ini
+        self.RATIO = (rs+rc)*2*np.pi / (rs*2*np.pi)
+        self.track = rotZ(-th) @ tr(-rs+rc,0) @ rotZ(self.RATIO * th) @ (self.pxy_ini * 1)
 
     def setPos(self,th):
-        self.x = (-rs+rc) * np.cos(th)
-        self.y = (-rs+rc) * np.sin(th)
-        ths = self.ROT * th
+        ths = self.RATIO * th
         self.rotate = rotZ(-th) @ tr(-rs+rc,0) @ rotZ(ths)
         
+        self.xy = self.rotate @ np.array([[0],[0],[1]])
         self.pxy = self.rotate @ self.pxy_ini
         self.track = np.hstack((self.track, self.pxy))
 
     def draw(self,ax):
-        drawCircle(ax, self.x, self.y, rs)
+        drawCircle(ax, self.xy[0], self.xy[1], rs)
         ax.scatter(self.pxy[0],self.pxy[1])
         ax.plot(self.track[0],self.track[1])
 
