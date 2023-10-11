@@ -75,7 +75,7 @@ class RollingCircle:
 
 view = tr(0,0)
 sc = RollingCircle(0)
-sc1 = RollingCircle(2*np.pi/6)
+sc1 = RollingCircle((2*np.pi)/6)
 
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
@@ -83,7 +83,7 @@ for th in np.linspace(0,np.pi*2,NUM):
     sc.setPos(th)
     sc.draw(ax)
 
-    sc1.setPos(th)
+    sc1.setPos(th + (2*np.pi)/6)
     sc1.draw(ax)
 
     drawCircle(ax, 0,0, rc)
