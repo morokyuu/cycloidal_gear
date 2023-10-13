@@ -56,7 +56,6 @@ class RollingCircle:
         self.RATIO = (rs+rc)*2*np.pi / (rs*2*np.pi)
         self.pxy_ini = np.array([[rs*0.5],[0],[1]])
         self.track = np.zeros(1)
-#        self.setPos(th_ini)
 
     def revolve(self,th):
         return rotZ(-th-self.th_ini) @ tr(-rs+rc,0)
@@ -71,9 +70,7 @@ class RollingCircle:
         if self.track.shape[0] > 1:
             self.track = np.hstack((self.track, self.pxy))
         else:
-            #self.track = self.revolve(th) self.rotate(th) @ self.pxy_ini
             self.track = self.pxy
-            #self.revolve(th) @ self.rotate(th) @ self.pxy_ini
 
     def draw(self,ax):
         drawCircle(ax, self.xy[0], self.xy[1], rs)
@@ -89,11 +86,15 @@ for th_offs in np.linspace(0,2*np.pi,6):
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
+    poly = np.array([[0],[0],[1]])
     for s in sc:
         s.setPos(th)
         s.draw(ax)
+        poly = np.hstack((poly,s.pxy))
 
     drawCircle(ax, 0,0, rc)
+
+    drawPolyline(ax,poly)
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
