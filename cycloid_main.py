@@ -91,6 +91,10 @@ for th in np.linspace(0,np.pi*2,NUM):
     drawCircle(ax, 0,0, rc)
 
     drawPolyline(ax,poly[:,1:])
+    
+    ecce = rotZ(((rc-rs)/rs+1) * th) @ sc[0].pxy_ini
+    ecce = np.hstack((np.zeros((3,1)),ecce))
+    ax.scatter(ecce[0],ecce[1])
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
