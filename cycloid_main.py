@@ -81,21 +81,17 @@ class RollingCircle:
         ax.plot(self.track[0],self.track[1])
 
 view = tr(0,0)
-sc = RollingCircle(0)
-sc1 = RollingCircle((np.pi)/3)
-sc2 = RollingCircle((2*np.pi)/3)
+
+sc = []
+for th_offs in np.linspace(0,2*np.pi,6):
+    sc.append(RollingCircle(th_offs))
 
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
-    sc.setPos(th)
-    sc.draw(ax)
-
-    sc1.setPos(th)
-    sc1.draw(ax)
-
-    sc2.setPos(th)
-    sc2.draw(ax)
+    for s in sc:
+        s.setPos(th)
+        s.draw(ax)
 
     drawCircle(ax, 0,0, rc)
 
