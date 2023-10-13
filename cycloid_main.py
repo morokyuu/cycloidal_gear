@@ -91,6 +91,7 @@ for th in np.linspace(0,np.pi*2,NUM):
         s.setPos(th)
         s.draw(ax)
         poly = np.hstack((poly,s.pxy))
+    poly = poly[:,1:]
 
     drawCircle(ax, 0,0, rc)
 
