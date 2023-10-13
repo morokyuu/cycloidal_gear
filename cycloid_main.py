@@ -71,7 +71,7 @@ class RollingCircle:
     def draw(self,ax):
         drawCircle(ax, self.xy[0], self.xy[1], rs)
         ax.scatter(self.pxy[0],self.pxy[1])
-        ax.plot(self.track[0,1:],self.track[1,1:])
+        # ax.plot(self.track[0,1:],self.track[1,1:])
 
 view = tr(0,0)
 
@@ -79,6 +79,8 @@ sc = []
 for th_offs in np.linspace(0,2*np.pi,6):
     sc.append(RollingCircle(th_offs))
 
+
+num = 0
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
@@ -97,7 +99,10 @@ for th in np.linspace(0,np.pi*2,NUM):
     ax.set_aspect('equal')
     ax.grid()
     
-    plt.show()
+    # plt.show()
+    
+    plt.savefig(f"anim/{num}.png")
+    num += 1
     
     plt.clf()
     plt.close()
