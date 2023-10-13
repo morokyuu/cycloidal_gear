@@ -55,7 +55,7 @@ class RollingCircle:
         self.th_ini = th_ini
         self.RATIO = (rs+rc)*2*np.pi / (rs*2*np.pi)
         self.pxy_ini = np.array([[rs*0.5],[0],[1]])
-        self.track = np.zeros(1)
+        self.track = np.zeros((3,1))
 
     def revolve(self,th):
         return rotZ(-th-self.th_ini) @ tr(-rs+rc,0)
@@ -66,16 +66,12 @@ class RollingCircle:
     def setPos(self,th):
         self.xy = self.revolve(th) @ np.array([[0],[0],[1]])
         self.pxy = self.revolve(th) @ self.rotate(th) @ self.pxy_ini
-
-        if self.track.shape[0] > 1:
-            self.track = np.hstack((self.track, self.pxy))
-        else:
-            self.track = self.pxy
+        self.track = np.hstack((self.track, self.pxy))
 
     def draw(self,ax):
         drawCircle(ax, self.xy[0], self.xy[1], rs)
         ax.scatter(self.pxy[0],self.pxy[1])
-        ax.plot(self.track[0],self.track[1])
+        ax.plot(self.track[0,1:],self.track[1,1:])
 
 view = tr(0,0)
 
@@ -91,11 +87,10 @@ for th in np.linspace(0,np.pi*2,NUM):
         s.setPos(th)
         s.draw(ax)
         poly = np.hstack((poly,s.pxy))
-    poly = poly[:,1:]
-
+    
     drawCircle(ax, 0,0, rc)
 
-    drawPolyline(ax,poly)
+    drawPolyline(ax,poly[:,1:])
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
