@@ -57,16 +57,22 @@ class RollingCircle:
         self.track = np.zeros(1)
         self.setPos(th)
 
+    def revolve(self,th):
+        return rotZ(-th) @ tr(-rs+rc,0)
+
+    def rotate(self,th):
+        return rotZ(self.RATIO * th)
+
     def setPos(self,th):
-        self.rotate = rotZ(-th) @ tr(-rs+rc,0) @ rotZ(self.RATIO * th)
+        #self.rotate = rotZ(-th) @ tr(-rs+rc,0) @ rotZ(self.RATIO * th)
         
-        self.xy = self.rotate @ np.array([[0],[0],[1]])
-        self.pxy = self.rotate @ self.pxy_ini
+        self.xy = self.revolve(th) @ np.array([[0],[0],[1]])
+        self.pxy = self.revolve(th) @ self.rotate(th) @ self.pxy_ini
 
         if self.track.shape[0] > 1:
             self.track = np.hstack((self.track, self.pxy))
         else:
-            self.track = self.rotate @ self.pxy_ini
+            self.track = self.revolve(th) @ self.pxy_ini
 
     def draw(self,ax):
         drawCircle(ax, self.xy[0], self.xy[1], rs)
