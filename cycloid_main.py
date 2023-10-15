@@ -92,6 +92,52 @@ for th_offs in np.linspace(0,2*np.pi,5):
 
 track = sc[0].getTrack()
 
+
+##----------------
+fig,ax = plt.subplots(figsize=(8,8))
+ax.plot(track[0,1:],track[1,1:])
+ax.set_xlim([-GRRANGE,GRRANGE])
+ax.set_ylim([-GRRANGE,GRRANGE])
+ax.set_aspect('equal')
+ax.grid()
+plt.show()
+plt.clf()
+plt.close()
+
+# sys.exit(0)
+
+offs = 20
+for i in range(1,track.shape[1]-1):
+    tr0 = track[:,i]
+    tr1 = track[:,i+1]
+
+    # normal vector
+    nn = (rotZ(np.pi/2.0) @ (tr1-tr0))
+    unit = nn / np.linalg.norm(nn)
+    
+    ofv = (offs * unit) + tr0
+
+    GRRANGE = 500
+    fig,ax = plt.subplots(figsize=(8,8))
+    ax.scatter(tr0[0],tr0[1])
+    ax.scatter(tr1[0],tr1[1])
+    ax.plot([tr0[0],ofv[0]],[tr0[1],ofv[1]])
+    ax.set_xlim([-GRRANGE,GRRANGE])
+    ax.set_ylim([-GRRANGE,GRRANGE])
+    ax.set_aspect('equal')
+    ax.grid()
+    plt.show()
+    plt.clf()
+    plt.close()
+
+    # break
+
+
+
+
+sys.exit(0)
+##----------------
+
 num = 0
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
