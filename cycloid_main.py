@@ -42,7 +42,7 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-rc = 600
+rc = 240
 rs = 120
 L = 100
 Lx = 55
@@ -63,7 +63,7 @@ class RollingCircle:
         return rotZ(th-self.th_ini) @ tr(rs+rc,0)
 
     def rotate(self,th):
-        return rotZ(self.RATIO * (th+self.th_ini))
+        return rotZ(self.RATIO * (th-self.th_ini))
 
     def setPos(self,th):
         self.xy = self.revolve(th) @ np.array([[0],[0],[1]])
@@ -77,43 +77,37 @@ class RollingCircle:
 
     def draw(self,ax):
         drawCircle(ax, self.xy[0], self.xy[1], rs)
-        ax.scatter(self.pxy[0],self.pxy[1])
+        ax.plot(np.array([self.xy[0],self.pxy[0]]),
+                np.array([self.xy[1],self.pxy[1]]),
+                color='green')
+        ax.scatter(np.array([self.xy[0],self.pxy[0]]),
+                np.array([self.xy[1],self.pxy[1]]),
+                color='green')
 
 view = tr(0,0)
 
 sc = []
-for th_offs in np.linspace(0,2*np.pi,7):
+for th_offs in np.linspace(0,2*np.pi,5):
     sc.append(RollingCircle(th_offs))
-#sc.append(RollingCircle(0))
 
-
-######
-#fig,ax = plt.subplots(figsize=(8,8))
 track = sc[0].getTrack()
-#ax.plot(track[0,1:],track[1,1:])
-#drawCircle(ax,0,0, rc)
-#ax.set_xlim([-GRRANGE,GRRANGE])
-#ax.set_ylim([-GRRANGE,GRRANGE])
-#ax.set_aspect('equal')
-#ax.grid()
-#sys.exit(0)
-######
 
 num = 0
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
-#    poly = np.array([[0],[0],[1]])
+    poly = np.array([[0],[0],[1]])
     for s in sc:
         s.setPos(th)
         s.draw(ax)
-#        poly = np.hstack((poly,s.pxy))
+        poly = np.hstack((poly,s.pxy))
     
     ax.plot(track[0,1:],track[1,1:])
     
     drawCircle(ax, 0,0, rc)
+    drawCircle(ax, 0,0, rs+rc)
 
-    # drawPolyline(ax,poly[:,1:])
+    drawPolyline(ax,poly[:,1:])
     
 #    ecce = rotZ(((rc-rs)/rs+1) * th) @ sc[0].pxy_ini
 #    ecce = np.hstack((np.zeros((3,1)),ecce))
