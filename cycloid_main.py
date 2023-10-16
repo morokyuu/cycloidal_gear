@@ -107,21 +107,8 @@ for i in range(1,track.shape[1]-1):
     ofv = ((offs * unit) + tr0).reshape(-1,1)
 
     track_offs = np.hstack((track_offs,ofv))
+track_offs = np.hstack((track_offs,track_offs[:,1].reshape(-1,1)))
 
-GRRANGE = 500
-fig,ax = plt.subplots(figsize=(8,8))
-ax.plot(track_offs[0,1:],track_offs[1,1:])
-ax.plot(track[0,1:],track[1,1:])
-ax.set_xlim([-GRRANGE,GRRANGE])
-ax.set_ylim([-GRRANGE,GRRANGE])
-ax.set_aspect('equal')
-ax.grid()
-plt.show()
-plt.clf()
-plt.close()
-
-
-sys.exit(0)
 ##----------------
 
 num = 0
@@ -135,6 +122,7 @@ for th in np.linspace(0,np.pi*2,NUM):
         poly = np.hstack((poly,s.pxy))
     
     ax.plot(track[0,1:],track[1,1:])
+    ax.plot(track_offs[0,1:],track_offs[1,1:])
     
     drawCircle(ax, 0,0, rc)
     drawCircle(ax, 0,0, rs+rc)
