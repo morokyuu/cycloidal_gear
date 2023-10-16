@@ -145,13 +145,16 @@ for i,th in enumerate(np.linspace(0,np.pi*2,NUM)):
     # ax.plot(track[0,1:],track[1,1:])
     # ax.plot(track_offs[0,1:],track_offs[1,1:])
     
-    ttrack = rotZ(roll[i]) @ track
-    ax.plot(ttrack[0,1:],ttrack[1,1:])
-    
     ecce = rotZ(((rc+rs)/rs+1) * th) @ sc[0].pxy_ini
     ecce = np.hstack((np.zeros((3,1)),ecce))
     ax.scatter(ecce[0],ecce[1])
     drawCircle(ax, ecce[0,1],ecce[1,1], rs+rc)
+    
+    
+    RATIO = (rs+rc)*2*np.pi / (rs*2*np.pi)
+    ttrack = rotZ(roll[i]) @ tr(ecce[0,1],ecce[1,1]) @ rotZ(RATIO* -th) @ track
+    ax.plot(ttrack[0,1:],ttrack[1,1:])
+    drawCircle(ax,rs+rc,0,offs)
     
     ax.plot([poly[0,1],poly[0,3]],[poly[1,1],poly[1,3]])
 
