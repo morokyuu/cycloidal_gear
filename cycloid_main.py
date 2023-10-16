@@ -110,7 +110,30 @@ track_offs = np.hstack((track_offs,track_offs[:,1].reshape(-1,1)))
 ##----------------
 
 num = 0
+roll = []
 for th in np.linspace(0,np.pi*2,NUM):
+    poly = np.array([[0],[0],[1]])
+    for s in sc:
+        s.setPos(th)
+        poly = np.hstack((poly,s.pxy))
+    
+    ecce = rotZ(((rc+rs)/rs+1) * th) @ sc[0].pxy_ini
+    ecce = np.hstack((np.zeros((3,1)),ecce))
+
+    # rth = np.arctan((poly[1,1]-poly[1,3]) / (poly[0,1]-poly[0,3]))
+    rth = np.arctan2((poly[0,1]-poly[0,3]),(poly[1,1]-poly[1,3]))
+    roll.append(rth)
+    
+    num += 1
+    
+    plt.clf()
+    plt.close()
+    # break
+
+
+
+
+for i,th in enumerate(np.linspace(0,np.pi*2,NUM)):
     fig,ax = plt.subplots(figsize=(8,8))
 
     poly = np.array([[0],[0],[1]])
@@ -119,10 +142,11 @@ for th in np.linspace(0,np.pi*2,NUM):
         s.draw(ax)
         poly = np.hstack((poly,s.pxy))
     
-    ax.plot(track[0,1:],track[1,1:])
-    ax.plot(track_offs[0,1:],track_offs[1,1:])
+    # ax.plot(track[0,1:],track[1,1:])
+    # ax.plot(track_offs[0,1:],track_offs[1,1:])
     
-    # drawPolyline(ax,poly[:,1:])
+    ttrack = rotZ(roll[i]) @ track
+    ax.plot(ttrack[0,1:],ttrack[1,1:])
     
     ecce = rotZ(((rc+rs)/rs+1) * th) @ sc[0].pxy_ini
     ecce = np.hstack((np.zeros((3,1)),ecce))
@@ -136,7 +160,7 @@ for th in np.linspace(0,np.pi*2,NUM):
     ax.set_aspect('equal')
     ax.grid()
     
-    # plt.show()
+    plt.show()
 
     if SAVEFIG:
         plt.savefig(f"anim/{num}.png")
@@ -145,6 +169,7 @@ for th in np.linspace(0,np.pi*2,NUM):
     plt.clf()
     plt.close()
     # break
+
 
 
 
