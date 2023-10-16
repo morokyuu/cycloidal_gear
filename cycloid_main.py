@@ -121,15 +121,12 @@ for th in np.linspace(0,np.pi*2,NUM):
     ax.plot(track[0,1:],track[1,1:])
     ax.plot(track_offs[0,1:],track_offs[1,1:])
     
-    #drawCircle(ax, 0,0, rc)
-    #drawCircle(ax, 0,0, rs+rc)
-
-    drawPolyline(ax,poly[:,1:])
+    # drawPolyline(ax,poly[:,1:])
     
     ecce = rotZ(((rc+rs)/rs+1) * th) @ sc[0].pxy_ini
     ecce = np.hstack((np.zeros((3,1)),ecce))
     ax.scatter(ecce[0],ecce[1])
-    # drawCircle(ax, ecce[0], ecce[1], rc)
+    drawCircle(ax, ecce[0,1],ecce[1,1], rs+rc)
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
