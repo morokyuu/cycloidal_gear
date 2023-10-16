@@ -44,8 +44,7 @@ def drawPolyline(ax,poly,color='blue'):
 
 rc = 240
 rs = 120
-L = 100
-Lx = 55
+offs = 60
 NUM = 100
 GRRANGE = 800
 TRACK_ENB = False
@@ -83,6 +82,7 @@ class RollingCircle:
         ax.scatter(np.array([self.xy[0],self.pxy[0]]),
                 np.array([self.xy[1],self.pxy[1]]),
                 color='green')
+        drawCircle(ax, self.pxy[0], self.pxy[1], offs)
 
 view = tr(0,0)
 
@@ -96,7 +96,6 @@ track = sc[0].getTrack()
 ##----------------
 
 track_offs = np.zeros((3,1))
-offs = 60
 for i in range(1,track.shape[1]-1):
     tr0 = track[:,i]
     tr1 = track[:,i+1]
