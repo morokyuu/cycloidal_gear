@@ -92,6 +92,25 @@ for th_offs in np.linspace(0,2*np.pi,5):
 
 track = sc[0].getTrack()
 
+
+##----------------
+
+track_offs = np.zeros((3,1))
+offs = 60
+for i in range(1,track.shape[1]-1):
+    tr0 = track[:,i]
+    tr1 = track[:,i+1]
+
+    # normal vector
+    nn = (rotZ(np.pi/2.0) @ (tr1-tr0))
+    unit = nn / np.linalg.norm(nn)
+    ofv = ((offs * unit) + tr0).reshape(-1,1)
+
+    track_offs = np.hstack((track_offs,ofv))
+track_offs = np.hstack((track_offs,track_offs[:,1].reshape(-1,1)))
+
+##----------------
+
 num = 0
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
@@ -103,6 +122,7 @@ for th in np.linspace(0,np.pi*2,NUM):
         poly = np.hstack((poly,s.pxy))
     
     ax.plot(track[0,1:],track[1,1:])
+    ax.plot(track_offs[0,1:],track_offs[1,1:])
     
     drawCircle(ax, 0,0, rc)
     drawCircle(ax, 0,0, rs+rc)
