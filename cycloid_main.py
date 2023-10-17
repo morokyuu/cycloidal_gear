@@ -50,7 +50,7 @@ GRRANGE = 800
 TRACK_ENB = False
 TRACK_ENB = True
 SAVEFIG = False
-SAVEFIG = True
+# SAVEFIG = True
 
 class RollingCircle:
     def __init__(self,th_ini):
@@ -159,7 +159,7 @@ for i,th in enumerate(np.linspace(0,np.pi*3-np.pi/4,NUM)):
     
     ##---------outer pin
     DISTPIN = rs+rc+offs
-    PINR = offs
+    PINR = offs * 0.79
     drawCircle(ax, DISTPIN,       0, PINR)
     drawCircle(ax,-DISTPIN,       0, PINR)
     drawCircle(ax,       0, DISTPIN, PINR)
@@ -188,7 +188,7 @@ for i,th in enumerate(np.linspace(0,np.pi*3-np.pi/4,NUM)):
     ax.set_aspect('equal')
     ax.grid()
     
-    # plt.show()
+    plt.show()
 
     if SAVEFIG:
         plt.savefig(f"anim/{i}.png")
