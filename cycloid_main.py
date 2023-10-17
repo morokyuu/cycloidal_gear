@@ -80,8 +80,9 @@ class RollingCircle:
         #ax.plot(np.array([self.xy[0],self.pxy[0]]),
         #        np.array([self.xy[1],self.pxy[1]]),
         #        color='green')
-        ax.scatter(self.pxy[0],self.pxy[1],color='green')
-        drawCircle(ax, self.pxy[0], self.pxy[1], offs)
+        pass
+        # ax.scatter(self.pxy[0],self.pxy[1],color='green')
+        # drawCircle(ax, self.pxy[0], self.pxy[1], offs)
 
 view = tr(0,0)
 
@@ -145,16 +146,38 @@ for i,th in enumerate(np.linspace(0,np.pi*2,NUM)):
     # ax.plot(track[0,1:],track[1,1:])
     # ax.plot(track_offs[0,1:],track_offs[1,1:])
     
-    ecce = rotZ(((rc+rs)/rs+1) * th) @ sc[0].pxy_ini
-    ecce = np.hstack((np.zeros((3,1)),ecce))
-    ax.scatter(ecce[0],ecce[1])
-    drawCircle(ax, ecce[0,1],ecce[1,1], rs+rc)
+    
+    ##---------
+    ecce = rotZ(3/4*th) @ sc[0].pxy_ini
+    
+    ecced = tr(ecce[0,0],ecce[1,0]) @ np.array([[0],[0],[1]])
+    drawCircle(ax, ecced[0,0],ecced[1,0], rc)
+    
+    # ecce = np.hstack((np.zeros((3,1)),ecce))
+    ax.scatter(0,0)
+    ax.scatter(ecced[0,0],ecced[1,0])
+    # drawCircle(ax, ecce[0,1],ecce[1,1], rs+rc)
+    ##---------
+    
+    ##---------outer pin
+    DISTPIN = rs+rc
+    drawCircle(ax, DISTPIN,       0, offs)
+    drawCircle(ax,-DISTPIN,       0, offs)
+    drawCircle(ax,       0, DISTPIN, offs)
+    drawCircle(ax,       0,-DISTPIN, offs)
+    
+    
+    ##---------outer pin
+    
     
     
     RATIO = (rs+rc)*2*np.pi / (rs*2*np.pi)
-    ttrack = rotZ(roll[i]) @ tr(ecce[0,1],ecce[1,1]) @ rotZ(RATIO* -th) @ track
+    # ttrack = rotZ(roll[i]) @ tr(ecce[0,1],ecce[1,1]) @ rotZ(RATIO* -th) @ track
+    ttrack = tr(sc[0].pxy_ini[0,0],0) @ rotZ(1/4 * th) @ track
     ax.plot(ttrack[0,1:],ttrack[1,1:])
-    drawCircle(ax,rs+rc,0,offs)
+    # drawCircle(ax,rs+rc,0,offs)
+    
+    
     
     ax.plot([poly[0,1],poly[0,3]],[poly[1,1],poly[1,3]])
 
