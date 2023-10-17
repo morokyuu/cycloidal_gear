@@ -44,13 +44,13 @@ def drawPolyline(ax,poly,color='blue'):
 
 rc = 240
 rs = 120
-offs = 60
+offs = 30
 NUM = 100
 GRRANGE = 800
 TRACK_ENB = False
 TRACK_ENB = True
 SAVEFIG = False
-#SAVEFIG = True
+SAVEFIG = True
 
 class RollingCircle:
     def __init__(self,th_ini):
@@ -134,7 +134,7 @@ for th in np.linspace(0,np.pi*2,NUM):
 
 
 
-for i,th in enumerate(np.linspace(0,np.pi*2,NUM)):
+for i,th in enumerate(np.linspace(0,np.pi*3-np.pi/4,NUM)):
     fig,ax = plt.subplots(figsize=(8,8))
 
     poly = np.array([[0],[0],[1]])
@@ -147,50 +147,51 @@ for i,th in enumerate(np.linspace(0,np.pi*2,NUM)):
     # ax.plot(track_offs[0,1:],track_offs[1,1:])
     
     
-    ##---------
+    ##---------curve-plate-center-circle
     ecce = rotZ(3/4*th) @ sc[0].pxy_ini
     
     ecced = tr(ecce[0,0],ecce[1,0]) @ np.array([[0],[0],[1]])
     drawCircle(ax, ecced[0,0],ecced[1,0], rc)
     
-    # ecce = np.hstack((np.zeros((3,1)),ecce))
     ax.scatter(0,0)
     ax.scatter(ecced[0,0],ecced[1,0])
-    # drawCircle(ax, ecce[0,1],ecce[1,1], rs+rc)
-    ##---------
+    ##---------curve-plate-center-circle
     
     ##---------outer pin
-    DISTPIN = rs+rc
-    drawCircle(ax, DISTPIN,       0, offs)
-    drawCircle(ax,-DISTPIN,       0, offs)
-    drawCircle(ax,       0, DISTPIN, offs)
-    drawCircle(ax,       0,-DISTPIN, offs)
-    
-    
+    DISTPIN = rs+rc+offs
+    PINR = offs
+    drawCircle(ax, DISTPIN,       0, PINR)
+    drawCircle(ax,-DISTPIN,       0, PINR)
+    drawCircle(ax,       0, DISTPIN, PINR)
+    drawCircle(ax,       0,-DISTPIN, PINR)
     ##---------outer pin
     
-    
-    
+    ##---------curve-plate-trocoid
+
     RATIO = (rs+rc)*2*np.pi / (rs*2*np.pi)
     # ttrack = rotZ(roll[i]) @ tr(ecce[0,1],ecce[1,1]) @ rotZ(RATIO* -th) @ track
-    ttrack = tr(sc[0].pxy_ini[0,0],0) @ rotZ(1/4 * th) @ track
+    ttrack = tr(ecced[0,0],ecced[1,0]) @ rotZ(-1/4 * th) @ rotZ(-np.pi/3) @ track
     ax.plot(ttrack[0,1:],ttrack[1,1:])
     # drawCircle(ax,rs+rc,0,offs)
+
+
+    ##---------curve-plate-trocoid
     
     
     
-    ax.plot([poly[0,1],poly[0,3]],[poly[1,1],poly[1,3]])
+    
+    
+    # ax.plot([poly[0,1],poly[0,3]],[poly[1,1],poly[1,3]])
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
     ax.set_aspect('equal')
     ax.grid()
     
-    plt.show()
+    # plt.show()
 
     if SAVEFIG:
-        plt.savefig(f"anim/{num}.png")
-    num += 1
+        plt.savefig(f"anim/{i}.png")
     
     plt.clf()
     plt.close()
