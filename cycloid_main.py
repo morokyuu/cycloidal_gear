@@ -104,7 +104,8 @@ py = (R+r) * np.sin(pth)
 pole = np.vstack((px,py,np.ones(pnum)))
 pole = rotZ(2*np.pi*4/(extr+1)) @ pole
 
-
+## inner roter
+##----------------
 for th in np.linspace(0,np.pi*2,NUM):
     phi = (R+r)/r*th
     x = (R+r)*np.cos(th)-l*np.cos(phi)
@@ -112,11 +113,32 @@ for th in np.linspace(0,np.pi*2,NUM):
     a = np.array([[x],[y],[1]])
     inner = np.hstack((inner,a))
 
+## offset track
+##----------------
+
+offs = -r
+track_offs = np.zeros((3,1))
+for i in range(1,inner.shape[1]-1):
+    tr0 = inner[:,i]
+    tr1 = inner[:,i+1]
+
+    # normal vector
+    nn = (rotZ(np.pi/2.0) @ (tr1-tr0))
+    unit = nn / np.linalg.norm(nn)
+    ofv = ((offs * unit) + tr0).reshape(-1,1)
+
+    track_offs = np.hstack((track_offs,ofv))
+track_offs = np.hstack((track_offs,track_offs[:,1].reshape(-1,1)))
+
+##----------------
+
+
 fig,ax = plt.subplots(figsize=(8,8))
-ax.plot(inner[0,1:],inner[1,1:])
 drawCircle(ax,0,0,R)
 #ax.scatter(px,py)
+#ax.plot(inner[0,1:],inner[1,1:])
 ax.scatter(pole[0],pole[1],c='g')
+ax.plot(track_offs[0,1:],track_offs[1,1:])
 ax.set_xlim([-GRRANGE,GRRANGE])
 ax.set_ylim([-GRRANGE,GRRANGE])
 ax.set_aspect('equal')
