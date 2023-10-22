@@ -8,7 +8,6 @@ Created on Sun Oct  8 07:55:22 2023
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import pandas as pd
 import sys
 import time
 
@@ -47,7 +46,7 @@ rs = 120
 L = 100
 Lx = 55
 NUM = 100
-GRRANGE = 800
+GRRANGE = 100
 TRACK_ENB = False
 TRACK_ENB = True
 SAVEFIG = False
@@ -88,23 +87,50 @@ sc = []
 for th_offs in np.linspace(0,2*np.pi,6):
     sc.append(RollingCircle(th_offs))
 
+R = 36
+r = 12
+l = 8
+inner = np.zeros((3,1))
+
+print(f'extrude:{R/r}')
+
+
+for th in np.linspace(0,np.pi*2,NUM):
+    phi = (R+r)/r*th
+    x = (R+r)*np.cos(th)-l*np.cos(phi)
+    y = (R+r)*np.sin(th)-l*np.sin(phi)
+    a = np.array([[x],[y],[1]])
+    inner = np.hstack((inner,a))
+
+fig,ax = plt.subplots(figsize=(8,8))
+ax.plot(inner[0,1:],inner[1,1:])
+drawCircle(ax,0,0,R)
+ax.set_xlim([-GRRANGE,GRRANGE])
+ax.set_ylim([-GRRANGE,GRRANGE])
+ax.set_aspect('equal')
+ax.grid()
+plt.show()
+
+sys.exit(0)
+
 num = 0
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
-    poly = np.array([[0],[0],[1]])
-    for s in sc:
-        s.setPos(th)
-        s.draw(ax)
-        poly = np.hstack((poly,s.pxy))
+#    poly = np.array([[0],[0],[1]])
+#    for s in sc:
+#        s.setPos(th)
+#        s.draw(ax)
+#        poly = np.hstack((poly,s.pxy))
     
     drawCircle(ax, 0,0, rc)
 
-    drawPolyline(ax,poly[:,1:])
+
+#    drawPolyline(ax,poly[:,1:])
     
-    ecce = rotZ(((rc-rs)/rs+1) * th) @ sc[0].pxy_ini
-    ecce = np.hstack((np.zeros((3,1)),ecce))
-    ax.scatter(ecce[0],ecce[1])
+#    ecce = rotZ(((rc-rs)/rs+1) * th) @ sc[0].pxy_ini
+#    ecce = np.hstack((np.zeros((3,1)),ecce))
+#    ax.scatter(ecce[0],ecce[1])
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
