@@ -91,8 +91,18 @@ R = 36
 r = 12
 l = 8
 inner = np.zeros((3,1))
+extr = R/r
 
-print(f'extrude:{R/r}')
+print(f'extrude:{extr}')
+
+
+pnum = int((R+r)/r+1)
+pth = np.linspace(0,np.pi*2,pnum)
+px = (R+r) * np.cos(pth)
+py = (R+r) * np.sin(pth)
+
+pole = np.vstack((px,py,np.ones(pnum)))
+pole = rotZ(2*np.pi*4/(extr+1)) @ pole
 
 
 for th in np.linspace(0,np.pi*2,NUM):
@@ -105,6 +115,8 @@ for th in np.linspace(0,np.pi*2,NUM):
 fig,ax = plt.subplots(figsize=(8,8))
 ax.plot(inner[0,1:],inner[1,1:])
 drawCircle(ax,0,0,R)
+#ax.scatter(px,py)
+ax.scatter(pole[0],pole[1],c='g')
 ax.set_xlim([-GRRANGE,GRRANGE])
 ax.set_ylim([-GRRANGE,GRRANGE])
 ax.set_aspect('equal')
