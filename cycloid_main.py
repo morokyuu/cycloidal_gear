@@ -90,7 +90,6 @@ for th_offs in np.linspace(0,2*np.pi,6):
 R = 36
 r = 12
 l = 8
-inner = np.zeros((3,1))
 extr = R/r
 
 print(f'extrude:{extr}')
@@ -104,41 +103,46 @@ py = (R+r) * np.sin(pth)
 pole = np.vstack((px,py,np.ones(pnum)))
 pole = rotZ(2*np.pi*4/(extr+1)) @ pole
 
-## inner roter
+## epitrochoid 
 ##----------------
+epit = np.zeros((3,1))
 for th in np.linspace(0,np.pi*2,NUM):
     phi = (R+r)/r*th
     x = (R+r)*np.cos(th)-l*np.cos(phi)
     y = (R+r)*np.sin(th)-l*np.sin(phi)
     a = np.array([[x],[y],[1]])
-    inner = np.hstack((inner,a))
+    epit = np.hstack((epit,a))
 
-## offset track
+## inner roter
 ##----------------
 
 offs = -r
-track_offs = np.zeros((3,1))
-for i in range(1,inner.shape[1]-1):
-    tr0 = inner[:,i]
-    tr1 = inner[:,i+1]
+inner = np.zeros((3,1))
+for i in range(1,epit.shape[1]-1):
+    tr0 = epit[:,i]
+    tr1 = epit[:,i+1]
 
     # normal vector
     nn = (rotZ(np.pi/2.0) @ (tr1-tr0))
     unit = nn / np.linalg.norm(nn)
     ofv = ((offs * unit) + tr0).reshape(-1,1)
 
-    track_offs = np.hstack((track_offs,ofv))
-track_offs = np.hstack((track_offs,track_offs[:,1].reshape(-1,1)))
+    inner = np.hstack((inner,ofv))
+inner = np.hstack((inner,inner[:,1].reshape(-1,1)))
+
+inner = tr(l,0) @ inner
 
 ##----------------
 
 
 fig,ax = plt.subplots(figsize=(8,8))
 drawCircle(ax,0,0,R)
+for i in range(pnum):
+    drawCircle(ax,pole[0,i],pole[1,i],r)
 #ax.scatter(px,py)
-#ax.plot(inner[0,1:],inner[1,1:])
+#ax.plot(epit[0,1:],epit[1,1:])
 ax.scatter(pole[0],pole[1],c='g')
-ax.plot(track_offs[0,1:],track_offs[1,1:])
+ax.plot(inner[0,1:],inner[1,1:])
 ax.set_xlim([-GRRANGE,GRRANGE])
 ax.set_ylim([-GRRANGE,GRRANGE])
 ax.set_aspect('equal')
