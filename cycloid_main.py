@@ -41,51 +41,11 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-rc = 600
-rs = 120
-L = 100
-Lx = 55
 NUM = 100
 GRRANGE = 100
 TRACK_ENB = False
 TRACK_ENB = True
 SAVEFIG = False
-
-class RollingCircle:
-    def __init__(self,th_ini):
-        self.th_ini = th_ini
-        self.RATIO = (rs+rc)*2*np.pi / (rs*2*np.pi)
-        self.pxy_ini = np.array([[rs*0.7],[0],[1]])
-        self.pxy_ini2 = np.array([[rs*0.2],[0],[1]])
-        self.track = np.zeros((3,1))
-        self.track2 = np.zeros((3,1))
-
-    def revolve(self,th):
-        return rotZ(-th-self.th_ini) @ tr(-rs+rc,0)
-
-    def rotate(self,th):
-        return rotZ(self.RATIO * (th+self.th_ini))
-
-    def setPos(self,th):
-        self.xy = self.revolve(th) @ np.array([[0],[0],[1]])
-        self.pxy = self.revolve(th) @ self.rotate(th) @ self.pxy_ini
-        self.pxy2 = self.revolve(th) @ self.rotate(th) @ self.pxy_ini2
-        self.track = np.hstack((self.track, self.pxy))
-        self.track2 = np.hstack((self.track2, self.pxy2))
-
-    def draw(self,ax):
-        drawCircle(ax, self.xy[0], self.xy[1], rs)
-        ax.scatter(self.pxy[0],self.pxy[1])
-        ax.scatter(self.pxy2[0],self.pxy2[1])
-        if TRACK_ENB:
-            ax.plot(self.track[0,1:],self.track[1,1:])
-            ax.plot(self.track2[0,1:],self.track2[1,1:])
-
-view = tr(0,0)
-
-sc = []
-for th_offs in np.linspace(0,2*np.pi,6):
-    sc.append(RollingCircle(th_offs))
 
 R = 36
 r = 12
@@ -129,46 +89,26 @@ for i in range(1,epit.shape[1]-1):
 
     inner = np.hstack((inner,ofv))
 inner = np.hstack((inner,inner[:,1].reshape(-1,1)))
-
-inner = tr(l,0) @ inner
+#inner = tr(l,0) @ inner
 
 ##----------------
-
-
-fig,ax = plt.subplots(figsize=(8,8))
-drawCircle(ax,0,0,R)
-for i in range(pnum):
-    drawCircle(ax,pole[0,i],pole[1,i],r)
-#ax.scatter(px,py)
-#ax.plot(epit[0,1:],epit[1,1:])
-ax.scatter(pole[0],pole[1],c='g')
-ax.plot(inner[0,1:],inner[1,1:])
-ax.set_xlim([-GRRANGE,GRRANGE])
-ax.set_ylim([-GRRANGE,GRRANGE])
-ax.set_aspect('equal')
-ax.grid()
-plt.show()
-
-sys.exit(0)
 
 num = 0
 for th in np.linspace(0,np.pi*2,NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
-#    poly = np.array([[0],[0],[1]])
-#    for s in sc:
-#        s.setPos(th)
-#        s.draw(ax)
-#        poly = np.hstack((poly,s.pxy))
-    
-    drawCircle(ax, 0,0, rc)
+    ecce = rotZ(3/4*th) @ np.array([[l],[0],[1]])
 
+    inner_m = tr(ecce[0],ecce[1]) @ rotZ(-1/4*th) @ inner
 
-#    drawPolyline(ax,poly[:,1:])
-    
-#    ecce = rotZ(((rc-rs)/rs+1) * th) @ sc[0].pxy_ini
-#    ecce = np.hstack((np.zeros((3,1)),ecce))
-#    ax.scatter(ecce[0],ecce[1])
+    drawCircle(ax,0,0,R)
+    for i in range(pnum):
+        drawCircle(ax,pole[0,i],pole[1,i],r)
+    #ax.scatter(px,py)
+    #ax.plot(epit[0,1:],epit[1,1:])
+    ax.scatter(ecce[0,0],ecce[1,0])
+    ax.scatter(pole[0],pole[1],c='g')
+    ax.plot(inner_m[0,1:],inner_m[1,1:])
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
