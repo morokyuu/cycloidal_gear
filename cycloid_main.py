@@ -43,9 +43,9 @@ def drawPolyline(ax,poly,color='blue'):
 
 NUM = 100
 GRRANGE = 100
-TRACK_ENB = False
-TRACK_ENB = True
+
 SAVEFIG = False
+SAVEFIG = True
 
 R = 36
 r = 12
@@ -94,12 +94,12 @@ inner = np.hstack((inner,inner[:,1].reshape(-1,1)))
 ##----------------
 
 num = 0
-for th in np.linspace(0,np.pi*2,NUM):
+for th in np.linspace(0,np.pi*(4/3*2),NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
     ecce = rotZ(3/4*th) @ np.array([[l],[0],[1]])
 
-    inner_m = tr(ecce[0],ecce[1]) @ rotZ(-1/4*th) @ inner
+    inner_m = tr(ecce[0,0],ecce[1,0]) @ rotZ(-1/4*th) @ inner
 
     drawCircle(ax,0,0,R)
     for i in range(pnum):
@@ -115,10 +115,11 @@ for th in np.linspace(0,np.pi*2,NUM):
     ax.set_aspect('equal')
     ax.grid()
     
-    plt.show()
-
     if SAVEFIG:
         plt.savefig(f"anim/{num}.png")
+    else:
+        plt.show()
+        
     num += 1
     
     plt.clf()
