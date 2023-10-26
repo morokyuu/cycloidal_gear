@@ -47,14 +47,15 @@ GRRANGE = 100
 SAVEFIG = False
 # SAVEFIG = True
 
-R = 36
+R = 48#36
 r = 12
 l = 8
 extr = R/r
 
 print(f'extrude:{extr}')
 
-
+## outer pin
+##=----------------
 pnum = int((R+r)/r+1)
 pth = np.linspace(0,np.pi*2,pnum)
 px = (R+r) * np.cos(pth)
@@ -97,9 +98,11 @@ num = 0
 for th in np.linspace(0,np.pi*(4/3*2),NUM):
     fig,ax = plt.subplots(figsize=(8,8))
 
-    ecce = rotZ(3/4*th) @ np.array([[l],[0],[1]])
+    rot_ratio = 4/5 #3/4
+    ecce = rotZ(rot_ratio*th) @ np.array([[l],[0],[1]])
 
-    inner_m = tr(ecce[0,0],ecce[1,0]) @ rotZ(-1/4*th) @ inner
+    # inner_m = tr(ecce[0,0],ecce[1,0]) @ rotZ(-1/4*th) @ inner
+    inner_m = tr(ecce[0,0],ecce[1,0]) @ rotZ((rot_ratio-1)*th) @ inner
 
     drawCircle(ax,0,0,R)
     for i in range(pnum):
@@ -124,7 +127,7 @@ for th in np.linspace(0,np.pi*(4/3*2),NUM):
     
     plt.clf()
     plt.close()
-    #break
+    # break
 
 
 
