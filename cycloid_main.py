@@ -45,7 +45,7 @@ NUM = 100
 GRRANGE = 100
 
 SAVEFIG = False
-SAVEFIG = True
+# SAVEFIG = True
 
 R = 36
 r = 12
