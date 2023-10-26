@@ -41,14 +41,14 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-NUM = 100
+NUM = 200
 GRRANGE = 100
 
 SAVEFIG = False
 SAVEFIG = True
 
 R = 48#36
-r = 8
+r = 6
 l = 4
 extr = R/r
 
