@@ -45,7 +45,7 @@ NUM = 100
 GRRANGE = 100
 
 SAVEFIG = False
-# SAVEFIG = True
+SAVEFIG = True
 
 R = 48#36
 r = 12
@@ -56,12 +56,12 @@ print(f'extrude:{extr}')
 
 ## outer pin
 ##=----------------
-pnum = int((R+r)/r+1)
-pth = np.linspace(0,np.pi*2,pnum)
+pnum = int((R+r)/r)
+pth = np.linspace(0,np.pi*2,pnum+1)
 px = (R+r) * np.cos(pth)
 py = (R+r) * np.sin(pth)
 
-pole = np.vstack((px,py,np.ones(pnum)))
+pole = np.vstack((px,py,np.ones(pnum+1)))
 pole = rotZ(2*np.pi*4/(extr+1)) @ pole
 
 ## epitrochoid 
@@ -94,18 +94,18 @@ inner = np.hstack((inner,inner[:,1].reshape(-1,1)))
 
 ##----------------
 
+
+
 num = 0
-for th in np.linspace(0,np.pi*(4/3*2),NUM):
+rot_ratio = (pnum-1)/pnum
+for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
     fig,ax = plt.subplots(figsize=(8,8))
-
-    rot_ratio = 4/5 #3/4
+    
     ecce = rotZ(rot_ratio*th) @ np.array([[l],[0],[1]])
-
-    # inner_m = tr(ecce[0,0],ecce[1,0]) @ rotZ(-1/4*th) @ inner
     inner_m = tr(ecce[0,0],ecce[1,0]) @ rotZ((rot_ratio-1)*th) @ inner
 
     drawCircle(ax,0,0,R)
-    for i in range(pnum):
+    for i in range(pnum+1):
         drawCircle(ax,pole[0,i],pole[1,i],r)
     #ax.scatter(px,py)
     #ax.plot(epit[0,1:],epit[1,1:])
