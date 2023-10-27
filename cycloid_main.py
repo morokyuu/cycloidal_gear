@@ -42,14 +42,14 @@ def drawPolyline(ax,poly,color='blue'):
 
 
 NUM = 200
-GRRANGE = 100
+GRRANGE = 50
 
 SAVEFIG = False
-SAVEFIG = True
+# SAVEFIG = True
 
-R = 48#36
+R = 24#36
 r = 3
-l = 1
+l = 1.8
 extr = R/r
 
 print(f'extrude:{extr}')
@@ -127,7 +127,7 @@ for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
     
     plt.clf()
     plt.close()
-    # break
+    break
 
 
 
