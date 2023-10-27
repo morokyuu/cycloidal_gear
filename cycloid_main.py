@@ -48,8 +48,8 @@ SAVEFIG = False
 SAVEFIG = True
 
 R = 48#36
-r = 6
-l = 4
+r = 3
+l = 1
 extr = R/r
 
 print(f'extrude:{extr}')
