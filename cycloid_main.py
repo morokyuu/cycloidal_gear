@@ -47,7 +47,7 @@ NUM = 100
 GRRANGE = 50
 
 SAVEFIG = False
-SAVEFIG = True
+#SAVEFIG = True
 
 R = 24#36
 r = 3
@@ -121,24 +121,28 @@ outpin = outpin[:,1:]
 
 num = 0
 rot_ratio = (pnum-1)/pnum
-for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
+for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     fig,ax = plt.subplots(figsize=(8,8))
     
     ## eccentric shaft
     ecce = rotZ(rot_ratio*th) @ np.array([[l],[0],[1]])
-    # ax.scatter(ecce[0,0],ecce[1,0])
-    drawCircle(ax,ecce[0,0],ecce[1,0],5/2.0)
-    drawCircle(ax, 0, 0, 5)
+    drawCircle(ax,0,0,5/2.0)
+#    drawCircle(ax,ecce[0,0],ecce[1,0],5/2.0)
+#    drawCircle(ax, 0, 0, 5)
 
     ## inner roter
     inn_rot = tr(ecce[0,0],ecce[1,0]) @ rotZ((rot_ratio-1)*th)
     inner_m = inn_rot @ inner
     outpin_m = inn_rot @ outpin
     ax.plot(inner_m[0,:],inner_m[1,:])
+
+    ecce_cen = inn_rot @ np.array([[0],[0],[1]])
+    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 5)
+
     #### output pin
     for i in range(OUTPIN_NUM):
         opx,opy = (outpin_m[0,i],outpin_m[1,i])
-        # ax.scatter(opx,opy)
+        ax.scatter(opx,opy)
         drawCircle(ax, opx, opy, 2*l)
 
     ## outer pole
