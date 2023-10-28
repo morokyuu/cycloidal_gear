@@ -62,7 +62,7 @@ pth = np.linspace(0,np.pi*2,pnum+1)
 px = (R+r) * np.cos(pth)
 py = (R+r) * np.sin(pth)
 
-pole = np.vstack((px,py,np.ones(pnum+1)))
+pole = np.vstack((px,py,np.ones(pnum+1)))[:,:-1]
 pole = rotZ(2*np.pi*4/(extr+1)) @ pole
 
 ## epitrochoid 
@@ -143,7 +143,7 @@ for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
 
     ## outer pole
     drawCircle(ax,0,0,R)
-    for i in range(pnum+1):
+    for i in range(pnum):
         drawCircle(ax,pole[0,i],pole[1,i],r)
     # ax.scatter(pole[0],pole[1],c='g')
     
