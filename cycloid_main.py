@@ -96,21 +96,8 @@ inner = np.hstack((inner,inner[:,1].reshape(-1,1)))
 ##----------------
 
 
-fig,ax = plt.subplots(figsize=(8,8))
-ax.plot(inner[0,1:],inner[1,1:])
-# ax.set_xlim([20,30])
-# ax.set_ylim([-2.5,2.5])
-GRRANGE = 30
-ax.set_xlim([-GRRANGE,GRRANGE])
-ax.set_ylim([-GRRANGE,GRRANGE])
-ax.set_aspect('equal')
-ax.grid()
-
-for i in range(1,NUM):
-    v0 = inner[:,i]
-    v1 = inner[:,i+1]
-    print(f'{v0[0]} {v0[1]} {v1[0]} {v1[1]}')
-
+## inner-roter dxf output 
+##---------------
 # with r12writer("scad/inner_roter.dxf") as dxf:
 #     for i in range(1,NUM):
 #         v0 = inner[:,i]
@@ -118,7 +105,17 @@ for i in range(1,NUM):
 #         dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
       
 
-sys.exit(0)
+## output pin-hole
+##---------------
+
+OUTPIN_NUM = 5
+OUTPIN_R   = 16
+outpin = np.zeros((3,1))
+for d in np.linspace(0,2*np.pi,OUTPIN_NUM+1):
+    print(d*180/np.pi)
+    outpin = np.hstack((outpin,rotZ(d) @ tr(OUTPIN_R,0) @ np.array([[0],[0],[1]])))
+
+outpin = outpin[:,1:]
 
 
 
@@ -133,11 +130,12 @@ for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
     drawCircle(ax,0,0,R)
     for i in range(pnum+1):
         drawCircle(ax,pole[0,i],pole[1,i],r)
-    #ax.scatter(px,py)
-    #ax.plot(epit[0,1:],epit[1,1:])
     ax.scatter(ecce[0,0],ecce[1,0])
     ax.scatter(pole[0],pole[1],c='g')
     ax.plot(inner_m[0,1:],inner_m[1,1:])
+
+    for i in range(OUTPIN_NUM):
+        ax.scatter(outpin[0,i],outpin[1,i])
 
     ax.set_xlim([-GRRANGE,GRRANGE])
     ax.set_ylim([-GRRANGE,GRRANGE])
@@ -153,7 +151,7 @@ for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
     
     plt.clf()
     plt.close()
-    # break
+    break
 
 
 
