@@ -111,7 +111,7 @@ for i in range(1,NUM):
     v1 = inner[:,i+1]
     print(f'{v0[0]} {v0[1]} {v1[0]} {v1[1]}')
 
-with r12writer("inner_roter.dxf") as dxf:
+with r12writer("scad/inner_roter.dxf") as dxf:
     for i in range(1,NUM):
         v0 = inner[:,i]
         v1 = inner[:,i+1]
