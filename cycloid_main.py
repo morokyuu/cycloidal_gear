@@ -47,7 +47,7 @@ NUM = 100
 GRRANGE = 50
 
 SAVEFIG = False
-#SAVEFIG = True
+SAVEFIG = True
 
 R = 24#36
 r = 3
@@ -134,12 +134,12 @@ for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
     inn_rot = tr(ecce[0,0],ecce[1,0]) @ rotZ((rot_ratio-1)*th)
     inner_m = inn_rot @ inner
     outpin_m = inn_rot @ outpin
-    ax.plot(inner_m[0,1:],inner_m[1,1:])
+    ax.plot(inner_m[0,:],inner_m[1,:])
     #### output pin
     for i in range(OUTPIN_NUM):
         opx,opy = (outpin_m[0,i],outpin_m[1,i])
         # ax.scatter(opx,opy)
-        drawCircle(ax, opx, opy, l)
+        drawCircle(ax, opx, opy, 2*l)
 
     ## outer pole
     drawCircle(ax,0,0,R)
@@ -163,7 +163,7 @@ for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
     
     plt.clf()
     plt.close()
-    break
+    # break
 
 
 
