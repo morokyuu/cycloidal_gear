@@ -42,7 +42,7 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-NUM = 100
+NUM = 400
 GRRANGE = 50
 
 SAVEFIG = False
@@ -91,18 +91,18 @@ for i in range(1,epit.shape[1]-1):
 
     inner = np.hstack((inner,ofv))
 inner = np.hstack((inner,inner[:,1].reshape(-1,1)))
-#inner = tr(l,0) @ inner
+inner = inner[:,1:]
 
 ##----------------
 
 
 ## inner-roter dxf output 
 ##---------------
-# with r12writer("scad/inner_roter.dxf") as dxf:
-#     for i in range(1,NUM):
-#         v0 = inner[:,i]
-#         v1 = inner[:,i+1]
-#         dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
+with r12writer("scad/inner_roter.dxf") as dxf:
+    for i in range(0,NUM-1):
+        v0 = inner[:,i]
+        v1 = inner[:,i+1]
+        dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
       
 
 ## output pin-hole
