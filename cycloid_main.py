@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import sys
 import time
+from ezdxf.addons import r12writer
 
 import matplotlib.style as mplstyle
 mplstyle.use('fast')
@@ -41,7 +42,7 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-NUM = 200
+NUM = 400
 GRRANGE = 50
 
 SAVEFIG = False
@@ -93,6 +94,31 @@ inner = np.hstack((inner,inner[:,1].reshape(-1,1)))
 #inner = tr(l,0) @ inner
 
 ##----------------
+
+
+fig,ax = plt.subplots(figsize=(8,8))
+ax.plot(inner[0,1:],inner[1,1:])
+# ax.set_xlim([20,30])
+# ax.set_ylim([-2.5,2.5])
+GRRANGE = 30
+ax.set_xlim([-GRRANGE,GRRANGE])
+ax.set_ylim([-GRRANGE,GRRANGE])
+ax.set_aspect('equal')
+ax.grid()
+
+for i in range(1,NUM):
+    v0 = inner[:,i]
+    v1 = inner[:,i+1]
+    print(f'{v0[0]} {v0[1]} {v1[0]} {v1[1]}')
+
+with r12writer("inner_roter.dxf") as dxf:
+    for i in range(1,NUM):
+        v0 = inner[:,i]
+        v1 = inner[:,i+1]
+        dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
+        
+
+sys.exit(0)
 
 
 
