@@ -42,11 +42,11 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-NUM = 400
+NUM = 100
 GRRANGE = 50
 
 SAVEFIG = False
-# SAVEFIG = True
+#SAVEFIG = True
 
 R = 24#36
 r = 3
@@ -111,12 +111,12 @@ for i in range(1,NUM):
     v1 = inner[:,i+1]
     print(f'{v0[0]} {v0[1]} {v1[0]} {v1[1]}')
 
-with r12writer("scad/inner_roter.dxf") as dxf:
-    for i in range(1,NUM):
-        v0 = inner[:,i]
-        v1 = inner[:,i+1]
-        dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
-        
+# with r12writer("scad/inner_roter.dxf") as dxf:
+#     for i in range(1,NUM):
+#         v0 = inner[:,i]
+#         v1 = inner[:,i+1]
+#         dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
+      
 
 sys.exit(0)
 
@@ -153,7 +153,7 @@ for th in np.linspace(0,2*np.pi*(1/rot_ratio),NUM):
     
     plt.clf()
     plt.close()
-    break
+    # break
 
 
 
