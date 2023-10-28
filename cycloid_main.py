@@ -42,7 +42,8 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-NUM = 400
+# NUM = 400
+NUM = 100
 GRRANGE = 50
 
 SAVEFIG = False
@@ -96,13 +97,13 @@ inner = inner[:,1:]
 ##----------------
 
 
-## inner-roter dxf output 
-##---------------
-with r12writer("scad/inner_roter.dxf") as dxf:
-    for i in range(0,NUM-1):
-        v0 = inner[:,i]
-        v1 = inner[:,i+1]
-        dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
+# ## inner-roter dxf output 
+# ##---------------
+# with r12writer("scad/inner_roter.dxf") as dxf:
+#     for i in range(0,NUM-1):
+#         v0 = inner[:,i]
+#         v1 = inner[:,i+1]
+#         dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
       
 
 ## output pin-hole
@@ -112,9 +113,8 @@ OUTPIN_NUM = 4
 OUTPIN_R   = 16
 outpin = np.zeros((3,1))
 for d in np.linspace(0,2*np.pi,OUTPIN_NUM+1):
-    print(d*180/np.pi)
-    outpin = np.hstack((outpin,rotZ(d) @ tr(OUTPIN_R,0) @ np.array([[0],[0],[1]])))
-
+    # print(d*180/np.pi)
+    outpin = np.hstack((outpin,rotZ(d + np.pi/8) @ tr(OUTPIN_R,0) @ np.array([[0],[0],[1]])))
 outpin = outpin[:,1:]
 
 
