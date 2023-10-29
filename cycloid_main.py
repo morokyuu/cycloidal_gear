@@ -29,8 +29,8 @@ def tr(x,y):
         [          0,          0, 1.0]
         ])
 
-def drawCircle(ax, x, y, r):
-    ax.add_patch(patches.Circle((x,y), radius=r, fill=False))
+def drawCircle(ax, x, y, r, color='black'):
+    ax.add_patch(patches.Circle((x,y), radius=r, fill=False, color=color))
         
 def drawLine(ax,x0,y0,x1,y1,color='blue'):
     ax.plot(np.array([x0,x1]),np.array([y0,y1]),color=color)
@@ -42,9 +42,9 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-# NUM = 400
-NUM = 100
-GRRANGE = 50
+NUM = 400
+# NUM = 100
+GRRANGE = 30
 
 SAVEFIG = False
 # SAVEFIG = True
@@ -110,7 +110,7 @@ inner = inner[:,1:]
 ##---------------
 
 OUTPIN_NUM = 4
-OUTPIN_R   = 16
+OUTPIN_R   = 15
 OUTPIN_ANGLE = np.pi/8
 outpin = np.zeros((3,1))
 for d in np.linspace(0,2*np.pi,OUTPIN_NUM+1):
@@ -141,23 +141,27 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     inn_rot = tr(ecce[0,0],ecce[1,0]) @ rotZ((rot_ratio-1)*th)
     inner_m = inn_rot @ inner
     outpin_m = inn_rot @ outpin
-    ax.plot(inner_m[0,:],inner_m[1,:])
+    ax.plot(inner_m[0,:],inner_m[1,:], color='tab:blue')
 
     ecce_cen = inn_rot @ np.array([[0],[0],[1]])
-    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 5)
+    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 5, 'tab:blue')
 
+
+    POLE_R = 3
+    # OUTPIN_R
+    
     #### output pin
     for i in range(OUTPIN_NUM):
         opx,opy = (outpin_m[0,i],outpin_m[1,i])
         ax.scatter(opx,opy)
-        drawCircle(ax, opx, opy, 3/2)
+        drawCircle(ax, opx, opy, POLE_R, 'tab:blue')
     
     
     ## output pin-hole
     outph_m = rotZ((rot_ratio-1)*th) @ outph
     for i in range(OUTPIN_NUM):
         ohx,ohy = (outph_m[0,i],outph_m[1,i])
-        drawCircle(ax, ohx, ohy, 2*l)
+        drawCircle(ax, ohx, ohy, 2*POLE_R, 'tab:red')
     
 
 
@@ -165,8 +169,10 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     drawCircle(ax,0,0,R)
     for i in range(pnum):
         drawCircle(ax,pole[0,i],pole[1,i],r)
-    # ax.scatter(pole[0],pole[1],c='g')
-    drawCircle(ax,0,0,OUTPIN_R)
+    
+    
+    drawCircle(ax,0,0,OUTPIN_R+l,'tab:red')
+    drawCircle(ax,0,0,OUTPIN_R-l,'tab:red')
     
 
     ax.set_xlim([-GRRANGE,GRRANGE])
@@ -183,7 +189,7 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     
     plt.clf()
     plt.close()
-    break
+    # break
 
 
 
