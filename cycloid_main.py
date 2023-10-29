@@ -154,19 +154,18 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     for i in range(OUTPIN_NUM):
         opx,opy = (outpin_m[0,i],outpin_m[1,i])
         ax.scatter(opx,opy)
-        drawCircle(ax, opx, opy, POLE_R, 'tab:blue')
+        # drawCircle(ax, opx, opy, POLE_R, 'tab:blue')
     
     
     ## output pin-hole
     outph_m = rotZ((rot_ratio-1)*th) @ outph
     for i in range(OUTPIN_NUM):
         ohx,ohy = (outph_m[0,i],outph_m[1,i])
-        drawCircle(ax, ohx, ohy, 2*POLE_R, 'tab:red')
+        drawCircle(ax, ohx, ohy, l, 'tab:red')
     
 
 
     ## outer pole
-    drawCircle(ax,0,0,R)
     for i in range(pnum):
         drawCircle(ax,pole[0,i],pole[1,i],r)
     
