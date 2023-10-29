@@ -47,7 +47,7 @@ NUM = 100
 GRRANGE = 50
 
 SAVEFIG = False
-#SAVEFIG = True
+# SAVEFIG = True
 
 R = 24#36
 r = 3
@@ -106,16 +106,25 @@ inner = inner[:,1:]
 #         dxf.add_line((v0[0],v0[1]),(v1[0],v1[1]))
       
 
-## output pin-hole
+## output pin
 ##---------------
 
 OUTPIN_NUM = 4
 OUTPIN_R   = 16
+OUTPIN_ANGLE = np.pi/8
 outpin = np.zeros((3,1))
 for d in np.linspace(0,2*np.pi,OUTPIN_NUM+1):
-    # print(d*180/np.pi)
-    outpin = np.hstack((outpin,rotZ(d + np.pi/8) @ tr(OUTPIN_R,0) @ np.array([[0],[0],[1]])))
-outpin = outpin[:,1:]
+    print(d*180/np.pi)
+    outpin = np.hstack((outpin,rotZ(d + OUTPIN_ANGLE) @ tr(OUTPIN_R,0) @ np.array([[0],[0],[1]])))
+outpin = outpin[:,1:-1]
+
+## output pin-hole
+##---------------
+
+outph = np.zeros((3,1))
+for d in np.linspace(0,2*np.pi,OUTPIN_NUM+1):
+    outph = np.hstack((outph,rotZ(d + OUTPIN_ANGLE) @ tr(OUTPIN_R,0) @ np.array([[0],[0],[1]])))
+outph = outph[:,1:-1]
 
 
 
@@ -127,8 +136,6 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     ## eccentric shaft
     ecce = rotZ(rot_ratio*th) @ np.array([[l],[0],[1]])
     drawCircle(ax,0,0,5/2.0)
-#    drawCircle(ax,ecce[0,0],ecce[1,0],5/2.0)
-#    drawCircle(ax, 0, 0, 5)
 
     ## inner roter
     inn_rot = tr(ecce[0,0],ecce[1,0]) @ rotZ((rot_ratio-1)*th)
@@ -143,14 +150,19 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     for i in range(OUTPIN_NUM):
         opx,opy = (outpin_m[0,i],outpin_m[1,i])
         ax.scatter(opx,opy)
-        drawCircle(ax, opx, opy, 2*l)
+        drawCircle(ax, opx, opy, 3/2)
 
     ## outer pole
     drawCircle(ax,0,0,R)
     for i in range(pnum):
         drawCircle(ax,pole[0,i],pole[1,i],r)
     # ax.scatter(pole[0],pole[1],c='g')
+    drawCircle(ax,0,0,OUTPIN_R)
     
+    
+    outhole = rotZ((rot_ratio-1)*th + OUTPIN_ANGLE) @ tr(OUTPIN_R,0) @ np.array([[0],[0],[1]])
+    ohx,ohy = (outhole[0,0],outhole[1,0])
+    drawCircle(ax, ohx, ohy, r)
     
 
     ax.set_xlim([-GRRANGE,GRRANGE])
@@ -167,7 +179,7 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     
     plt.clf()
     plt.close()
-    # break
+    break
 
 
 
