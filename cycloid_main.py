@@ -42,12 +42,12 @@ def drawPolyline(ax,poly,color='blue'):
         drawLine(ax,poly[i,0],poly[i,1],poly[i+1,0],poly[i+1,1],color=color)
 
 
-NUM = 400
-# NUM = 100
+# NUM = 400
+NUM = 100
 GRRANGE = 30
 
 SAVEFIG = False
-# SAVEFIG = True
+SAVEFIG = True
 
 R = 24#36
 r = 3
@@ -146,7 +146,7 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
 
     ecce_cen = inn_rot @ np.array([[0],[0],[1]])
     drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 5, 'tab:blue')
-
+    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 11, 'tab:blue')
 
     POLE_R = 4/2
     # OUTPIN_R

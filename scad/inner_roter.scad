@@ -3,19 +3,17 @@ $fs = 0.1; //minimum=0.01
 
 //9-teeth
 
-ecce = 1.8;
-
-
 difference(){
     difference(){
         linear_extrude(height=4,convexity=10)
         import(file="inner_roter.dxf");
 
-        translate([ecce,0,0])
-        cylinder(h=6,r=5);
+        cylinder(h=6,r=11);
     };
     
-    rotate([0,0,65])
-    translate([14,0,0])
-    cylinder(h=6,r=5);
+    for(deg = [22.5 : 360/4 : 360]){
+        rotate([0,0,deg])
+        translate([14,0,0])
+        cylinder(h=6,r=2);
+    }
 };
