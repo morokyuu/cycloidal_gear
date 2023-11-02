@@ -47,7 +47,7 @@ NUM = 100
 GRRANGE = 30
 
 SAVEFIG = False
-SAVEFIG = True
+# SAVEFIG = True
 
 R = 24#36
 r = 3
@@ -145,8 +145,8 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     ax.plot(inner_m[0,:],inner_m[1,:], color='tab:blue')
 
     ecce_cen = inn_rot @ np.array([[0],[0],[1]])
-    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 5, 'tab:blue')
-    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 11, 'tab:blue')
+    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 4, 'tab:blue') #ecce shaft
+    drawCircle(ax, ecce_cen[0,0], ecce_cen[1,0], 7, 'tab:blue') #ecce shaft bearing hole
 
     POLE_R = 4/2
     # OUTPIN_R
@@ -189,7 +189,7 @@ for th in np.linspace(0, extr * 2*np.pi*(1/rot_ratio),NUM)[:-1]:
     
     plt.clf()
     plt.close()
-    # break
+    break
 
 
 
