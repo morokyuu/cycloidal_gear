@@ -1,5 +1,4 @@
-$fa = 1;//5; //minimum=0.01
-$fs = 0.1; //minimum=0.01
+include <param.scad>
 
 //9-teeth
 

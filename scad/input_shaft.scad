@@ -1,14 +1,4 @@
-$fa = 5; //minimum=0.01
-$fs = 0.1; //minimum=0.01
-
-ecce = 1.8;
-d_ecceshaft = 8;
-d_eccebearing = 14;
-
-d_motshaft = 5;
-l_motshaft = 8;//13;
-
-d_shaftholder = 10;
+include <param.scad>
 
 module shaft_hole(){
     hull(){
@@ -21,7 +11,7 @@ module shaft_hole(){
 module shaft_holder(){
     union(){
         //shaft holder
-        cylinder(h=l_motshaft+10,r=d_shaftholder/2,center=false);
+        cylinder(h=l_motshaft+7,r=d_shaftholder/2,center=false);
         //eccentric shaft
         translate([ecce,0,0])
         cylinder(h=l_motshaft+15,r=d_motshaft/2);
@@ -29,6 +19,6 @@ module shaft_holder(){
 }
 
 difference(){
-    shaft_holder();
+    %shaft_holder();
     shaft_hole();
 }
