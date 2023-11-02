@@ -18,18 +18,17 @@ module shaft_hole(){
     }
 }
 
-shaft_hole();
-
-/*
-difference(){
+module shaft_holder(){
     union(){
         //shaft holder
         cylinder(h=l_motshaft+10,r=d_shaftholder/2,center=false);
         //eccentric shaft
         translate([ecce,0,0])
-        cylinder(h=l_motshaft+20,r=5/2);
+        cylinder(h=l_motshaft+15,r=d_motshaft/2);
     }
-    //shaft hole
-    cylinder(h=13,r=d_motshaft/2);
 }
-*/
+
+difference(){
+    shaft_holder();
+    shaft_hole();
+}
