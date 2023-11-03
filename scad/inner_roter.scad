@@ -11,19 +11,15 @@ module output_pins(){
     for(deg = [th_outp_angle : 360/4 : 360]){
         rotate([0,0,deg])
         translate([d_outp_position/2,0,0])
-        cylinder(h=l_roter_thick+4.5,r=d_outp_schole/2);
+        cylinder(h=l_roter_thick+5,r=d_outp_schole/2);
     }
 }
 
 difference(){
-    difference(){
-        union(){
-            roter();
-            output_pins();
-        };
-        //bearing hole
-        cylinder(h=l_roter_thick,r=d_eccebearing/2);
+    union(){
+        roter();
+        output_pins();
     };
-    //for bearing frange offset
-    cylinder(h=l_eccebearing_fr,r=(d_eccebearing+4)/2);
-}
+    //bearing hole
+    cylinder(h=l_roter_thick,r=d_eccebearing/2);
+};

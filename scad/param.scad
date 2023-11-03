@@ -2,6 +2,11 @@
 $fa = 5; //5  minimum=0.01
 $fs = 1; //0.1  minimum=0.01
 
+/////base params
+R = 24;
+r = 3;
+l = 1.8; //eccentric shaft dist
+
 /////roter
 ecce = 1.8;
 d_ecceshaft = 7.6;
@@ -21,11 +26,16 @@ l_motecceshaft = l_motshaft+11.7;
 
 d_shaftholder = 10;
 
+
 /////outer-pole
 //spacer 3x6x5
 d_pole = 6;
 l_pole = 5;
 d_pole_hole = 3;
+
+d_pole_position = (R+r)*2;
+ROTER2OUTERPIN_GAP = 0.15;
+
 
 /////bottom-plate
 l_bottmoplate_h = 4;
