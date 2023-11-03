@@ -29,6 +29,15 @@ module base_assy(){
     }
 }
 
+module lid_assy(){
+    %import("lid_plate.stl");
+    
+    translate([0,0,-l_eccebearing_fr])
+    color("yellow")
+    import("bearing.stl");
+}
+
+
 
 roter_assy();
 
@@ -37,8 +46,7 @@ translate([0,0,-l_bottmoplate_h]){
 }
 
 translate([0,0,10])
-import("lid_plate.stl");
-
+lid_assy();
 
 translate([0,0,-l_motshafthld-l_eccesleeve_h])
 color("green")
