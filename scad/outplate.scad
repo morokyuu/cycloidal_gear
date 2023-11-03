@@ -2,6 +2,8 @@ include <param.scad>
 
 
 
+cylinder(h=30,r=d_ecceshaft/2);
+
 difference(){
     cylinder(h=3, r=22);
     

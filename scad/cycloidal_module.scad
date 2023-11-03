@@ -30,7 +30,7 @@ module base_assy(){
 }
 
 module lid_assy(){
-    *import("lid_plate.stl");
+    import("lid_plate.stl");
     
     translate([0,0,-l_eccebearing_fr])
     color("yellow")
