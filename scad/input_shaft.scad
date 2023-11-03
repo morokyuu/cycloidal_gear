@@ -11,14 +11,14 @@ module shaft_hole(){
 module shaft_holder(){
     union(){
         //shaft holder
-        cylinder(h=l_motshaft+7,r=d_shaftholder/2,center=false);
+        cylinder(h=l_motshafthld,r=d_shaftholder/2,center=false);
         //eccentric shaft
         translate([ecce,0,0])
-        cylinder(h=l_motshaft+15,r=d_motshaft/2);
+        cylinder(h=l_motecceshaft,r=d_motshaft/2);
     }
 }
 
 difference(){
-    %shaft_holder();
+    shaft_holder();
     shaft_hole();
 }

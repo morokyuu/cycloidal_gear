@@ -11,8 +11,12 @@ l_roter_thick = 4;
 /////motor shaft
 d_motshaft = 5;
 l_motshaft = 8;//13;
+l_motshafthld = l_motshaft+7;
+l_motecceshaft = l_motshaft+15;
 
 d_shaftholder = 10;
+
+
 
 /////outpin
 th_outp_angle = 22.5;
