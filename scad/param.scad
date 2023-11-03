@@ -1,6 +1,6 @@
 
 $fa = 5; //5  minimum=0.01
-$fs = 1; //0.1  minimum=0.01
+$fs = 0.1; //0.1  minimum=0.01
 
 /////base params
 R = 24;

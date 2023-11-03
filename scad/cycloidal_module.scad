@@ -48,6 +48,9 @@ translate([0,0,-l_bottmoplate_h]){
 translate([0,0,10])
 lid_assy();
 
+translate([0,0,-15])
+import("motor_plate.stl");
+
 translate([0,0,-l_motshafthld-l_eccesleeve_h])
 color("green")
 import("input_shaft.stl");
