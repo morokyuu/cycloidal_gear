@@ -8,7 +8,7 @@ module roter_assy(){
         import("bearing.stl");
         
         translate([0,0,l_eccesleeve_h])
-        color("blue")
+        color("cyan")
         import("inner_roter.stl");
     }
 }
@@ -30,11 +30,15 @@ module base_assy(){
 }
 
 module lid_assy(){
-    %import("lid_plate.stl");
+    *import("lid_plate.stl");
     
     translate([0,0,-l_eccebearing_fr])
     color("yellow")
     import("bearing.stl");
+    
+    translate([0,0,-l_output_h-1])
+    rotate([0,0,th_outp_angle])
+    import("outplate.stl");
 }
 
 

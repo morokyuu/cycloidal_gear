@@ -11,7 +11,7 @@ module output_pins(){
     for(deg = [th_outp_angle : 360/4 : 360]){
         rotate([0,0,deg])
         translate([d_outp_position/2,0,0])
-        cylinder(h=l_roter_thick+5,r=d_outp_schole/2);
+        cylinder(h=l_roter_thick+5,r=d_outp_diameter/2);
     }
 }
 

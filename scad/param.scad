@@ -1,6 +1,6 @@
 
 $fa = 5; //5  minimum=0.01
-$fs = 0.1; //0.1  minimum=0.01
+$fs = 1; //0.1  minimum=0.01
 
 /////base params
 R = 24;
@@ -43,6 +43,10 @@ l_bottmoplate_h = 4;
 /////outpin
 th_outp_angle = 22.5;
 d_outp_position = 30;
-d_outp_schole = 3;//M3
+d_outp_diameter = 3;
 
 
+
+/////output-roter
+d_output_hole = (d_outp_diameter/2 + l)*2;
+l_output_h = 4;
