@@ -20,5 +20,3 @@ module base_plate(aperture){
         cylinder(h=l_bottmoplate_h, r=aperture/2);
     }
 }
-
-base_plate(30);
