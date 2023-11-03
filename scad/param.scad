@@ -1,6 +1,6 @@
 
 $fa = 5; //5  minimum=0.01
-$fs = 1; //0.1  minimum=0.01
+$fs = 0.1; //0.1  minimum=0.01
 
 /////base params
 R = 24;
@@ -31,7 +31,7 @@ d_shaftholder = 10;
 //spacer 3x6x5
 d_pole = 6;
 l_pole = 5;
-d_pole_hole = 3;
+d_pole_hole = 3.5;
 
 d_pole_position = (R+r)*2;
 ROTER2OUTERPIN_GAP = 0.15;
