@@ -6,20 +6,20 @@ module roter(){
         import(file="inner_roter.dxf");
 }
 
-//output-pin screw holes
-module pinholes(){
+//output-pin
+module output_pins(){
     for(deg = [th_outp_angle : 360/4 : 360]){
         rotate([0,0,deg])
-        translate([r_outp_position,0,0])
-        cylinder(h=l_roter_thick,r=r_outp_schole);
+        translate([d_outp_position/2,0,0])
+        cylinder(h=l_roter_thick+4.5,r=d_outp_schole/2);
     }
 }
 
 difference(){
     difference(){
-        difference(){
+        union(){
             roter();
-            pinholes();
+            output_pins();
         };
         //bearing hole
         cylinder(h=l_roter_thick,r=d_eccebearing/2);

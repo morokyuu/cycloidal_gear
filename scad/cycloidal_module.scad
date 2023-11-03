@@ -2,8 +2,6 @@ include <param.scad>
 
 
 translate([ecce,0,0]){
-    
-    
     color("blue")
     import("inner_roter.stl");
     color("yellow")

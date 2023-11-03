@@ -1,6 +1,6 @@
 
-$fa = 5; //minimum=0.01
-$fs = 0.1; //minimum=0.01
+$fa = 5; //5  minimum=0.01
+$fs = 1; //0.1  minimum=0.01
 
 /////roter
 ecce = 1.8;
@@ -17,18 +17,22 @@ l_eccebearing_fr = 0.8;
 d_motshaft = 5;
 l_motshaft = 8;//13;
 l_motshafthld = l_motshaft+7;
-l_motecceshaft = l_motshaft+15;
+l_motecceshaft = l_motshaft+11.7;
 
 d_shaftholder = 10;
 
+/////outer-pole
+//spacer 3x6x5
+d_pole = 6;
+l_pole = 5;
+d_pole_hole = 3;
 
+/////bottom-plate
+l_bottmoplate_h = 4;
 
 /////outpin
 th_outp_angle = 22.5;
-r_outp_position = 15;
-r_outp_schole = 3;//M3
+d_outp_position = 30;
+d_outp_schole = 3;//M3
 
-//spacer 3x6x5
-d_outp_pin = 6;
-l_outp_pin = 5;
 
