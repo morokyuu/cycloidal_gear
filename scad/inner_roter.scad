@@ -17,8 +17,13 @@ module pinholes(){
 
 difference(){
     difference(){
-        roter();
-        pinholes();
+        difference(){
+            roter();
+            pinholes();
+        };
+        //bearing hole
+        cylinder(h=l_roter_thick,r=d_eccebearing/2);
     };
-    cylinder(h=l_roter_thick,r=d_eccebearing/2);
+    //for bearing frange offset
+    cylinder(h=l_eccebearing_fr,r=(d_eccebearing+4)/2);
 }

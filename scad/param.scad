@@ -4,9 +4,14 @@ $fs = 0.1; //minimum=0.01
 
 /////roter
 ecce = 1.8;
-d_ecceshaft = 8;
+d_ecceshaft = 7.6;
+l_eccesleeve_h = 0.5;
+l_roter_thick = 3.5;
 d_eccebearing = 14;
-l_roter_thick = 4;
+d_eccebearing_fr = 16.5;
+l_eccebearing_h = 4;
+l_eccebearing_fr = 0.8;
+
 
 /////motor shaft
 d_motshaft = 5;
