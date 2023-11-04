@@ -15,11 +15,19 @@ module output_pins(){
     }
 }
 
+module bearing_hole(){
+    union(){
+        cylinder(h=l_roter_thick,r=d_eccebearing/2+tr_bearing_hole);
+        //frange
+        translate([0,0,l_roter_thick-l_eccebearing_fr])
+        cylinder(h=1,r=d_eccebearing_fr/2);
+    }
+}
+
 difference(){
     union(){
         roter();
         output_pins();
     };
-    //bearing hole
-    cylinder(h=l_roter_thick,r=d_eccebearing/2);
+    bearing_hole();
 };
