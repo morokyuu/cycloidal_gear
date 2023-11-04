@@ -19,7 +19,7 @@ module spacer_array(){
 
 base_plate(30);
 
-translate([0,0,l_roter_thick])
+translate([0,0,l_bottomplate_h])
 spacer_array();
 
 

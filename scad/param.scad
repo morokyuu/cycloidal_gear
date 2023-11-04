@@ -26,7 +26,7 @@ d_outp_position = 30;
 d_outp_diameter = 5;
 
 l_outp_step_h = 0.5;
-l_outp_length = 4.5+0.4;
+l_outp_length = 2.9;
 
 /////motor shaft
 d_motshaft = 5;
@@ -38,9 +38,8 @@ d_shaftholder = 10;
 
 
 /////outer-pole
-//spacer 3x6x5
 d_pole = 6;
-l_pole = 7;
+l_pole = 5.5;
 d_pole_hole = 3.5;
 
 d_pole_position = (R+r)*2;
@@ -48,7 +47,7 @@ ROTER2OUTERPIN_GAP = 0.15;
 
 
 /////bottom-plate
-l_bottmoplate_h = 4;
+l_bottomplate_h = 4;
 
 /////lid-plate
 l_lidspacer_h = 2;
