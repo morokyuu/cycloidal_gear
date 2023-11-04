@@ -21,10 +21,11 @@ module base_assy(){
 }
 
 module lid_assy(){
+    color("gray")
     import("lid_plate.stl");
     
-    translate([0,0,l_eccebearing_h])
-    rotate([180,0,0])
+    //translate([0,0,l_eccebearing_h])
+    //rotate([180,0,0])
     color("yellow")
     import("bearing.stl");
     
@@ -42,7 +43,7 @@ translate([0,0,-l_bottmoplate_h]){
     base_assy();
 }
 
-translate([0,0,l_roter_thick+])
+translate([0,0,l_roter_thick+l_outp_length])
 lid_assy();
 
 translate([0,0,-15])

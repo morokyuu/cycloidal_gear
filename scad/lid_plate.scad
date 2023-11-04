@@ -2,7 +2,7 @@ include <base_plate.scad>
 
 
 module bearing_hole(){
-    translate([0,0,l_eccebearing_h-l_eccebearing_fr])
+    //translate([0,0,l_eccebearing_h-l_eccebearing_fr])
     cylinder(h=l_eccebearing_fr,r=d_eccebearing_fr/2);
 }
 
@@ -26,10 +26,25 @@ module window(){
     }
 }
 
+module spacer(){
+    difference(){
+        cylinder(h=l_lidspacer_h, r=d_pole/2-0.2);
+        cylinder(h=l_lidspacer_h, r=d_pole_hole/2);
+    }
+}
+
 difference(){
     base_plate(d_eccebearing+tr_bearing_hole);
+    
     bearing_hole();
     
     window();
 }
 
+rotate([180,0,0])
+//spacers
+for(deg = [0 : 360/9 : 360]){
+    rotate([0,0,deg])
+    translate([d_pole_position/2,0,0])
+    spacer();
+}
