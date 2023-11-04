@@ -1,3 +1,5 @@
 anim/
 jyogai/
 cp_*
+*.stl
+*.gcode
