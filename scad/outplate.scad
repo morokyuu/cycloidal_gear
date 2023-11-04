@@ -7,7 +7,7 @@ GAP = 0.15;
 
 difference(){
     //shaft
-    cylinder(h=l_output_shaft_len,r=d_ecceshaft/2+tr_ecceshaft);
+    cylinder(h=l_output_shaft_len,r=d_ecceshaft/2+tr_bearing_shaft);
     
     //d-cut
     translate([d_ecceshaft/2-0.5,-15,8])
