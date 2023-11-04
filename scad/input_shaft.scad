@@ -1,11 +1,7 @@
 include <param.scad>
 
 module shaft_hole(){
-    hull(){
-        translate([0,0,l_motshaft+6])
-        cylinder(h=0.1,r=0.1);
-        cylinder(h=l_motshaft,r=d_motshaft/2);
-    }
+    cylinder(h=l_motshaft,r=d_motshaft/2);
 }
 
 module eccentric_shaft(){
@@ -25,11 +21,14 @@ module shaft_holder(){
         //shaft holder
         cylinder(h=l_motshafthld,r=d_shaftholder/2,center=false);
         
+        width = 7
+        translate([10,-5,0])
+        cube([10,10,l_motshafthld]);
         eccentric_shaft();
     }
 }
 
 difference(){
-    shaft_holder();
+    %shaft_holder();
     shaft_hole();
 }
