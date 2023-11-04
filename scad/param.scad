@@ -20,6 +20,14 @@ l_eccebearing_fr = 0.8;
 tr_bearing_shaft = +0.2;
 tr_bearing_hole = -0.2;
 
+//outpin
+th_outp_angle = 22.5;
+d_outp_position = 30;
+d_outp_diameter = 5;
+
+l_outp_length = 3;
+
+
 /////motor shaft
 d_motshaft = 5;
 l_motshaft = 8;//13;
@@ -42,10 +50,6 @@ ROTER2OUTERPIN_GAP = 0.15;
 /////bottom-plate
 l_bottmoplate_h = 4;
 
-/////outpin
-th_outp_angle = 22.5;
-d_outp_position = 30;
-d_outp_diameter = 5;
 
 /////output-roter
 d_output_hole = (d_outp_diameter/2 + l)*2;

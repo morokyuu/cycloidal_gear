@@ -10,7 +10,7 @@ module roter_assy(){
         import("bearing.stl");
         
         color("cyan")
-        %import("inner_roter.stl");
+        import("inner_roter.stl");
     }
 }
 
@@ -42,7 +42,7 @@ translate([0,0,-l_bottmoplate_h]){
     base_assy();
 }
 
-translate([0,0,30])
+translate([0,0,l_roter_thick+])
 lid_assy();
 
 translate([0,0,-15])

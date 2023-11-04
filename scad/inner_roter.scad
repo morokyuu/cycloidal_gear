@@ -12,7 +12,7 @@ module output_pins(){
         rotate([0,0,deg])
         translate([d_outp_position/2,0,0]){
             //pole
-            cylinder(h=l_roter_thick+5,r=d_outp_diameter/2);
+            cylinder(h=l_roter_thick+l_outp_length,r=d_outp_diameter/2);
             //step
             cylinder(h=l_roter_thick+0.5,r=d_outp_diameter/2+3.8);
         }
