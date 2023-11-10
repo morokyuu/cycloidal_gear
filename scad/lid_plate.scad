@@ -2,7 +2,7 @@ include <base_plate.scad>
 
 
 module bearing_hole(){
-    cylinder(h=l_eccebearing_fr,r=d_eccebearing_fr/2+tr_bearing_hole);
+    cylinder(h=l_eccebearing_fr,r=d_eccebearing_fr/2+tr_bearing_shaft);
 }
 
 module window(){

@@ -6,9 +6,11 @@ module roter_assy(){
     translate([ecce,0,0]){
         color("yellow")
         rotate([180,0,0])
-        translate([0,0,-l_eccebearing_h+l_eccesleeve_h])
+        //translate([0,0,-l_eccebearing_h-l_eccesleeve_h])
+        translate([0,0,-l_eccebearing_h])
         import("bearing.stl");
         
+        translate([0,0,l_eccebearing_fr])
         color("cyan")
         import("inner_roter.stl");
     }
@@ -34,21 +36,26 @@ module lid_assy(){
 }
 
 
-//translate([0,0,30])
-roter_assy();
 
 translate([0,0,-l_bottomplate_h]){
     base_assy();
 }
 
-echo(l_pole+l_lidspacer_h)
+translate([0,0,-l_motshafthld-l_motecce_fr]){
+    color("green")
+    import("input_shaft.stl");
+}
+
+
+//translate([0,0,30])
+roter_assy();
+
+
 translate([0,0,l_pole+l_lidspacer_h])
 lid_assy();
 
 translate([0,0,-15])
 import("motor_plate.stl");
 
-translate([0,0,-l_motshafthld-l_eccesleeve_h])
-color("green")
-import("input_shaft.stl");
+
 

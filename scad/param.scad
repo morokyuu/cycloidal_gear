@@ -1,6 +1,6 @@
 
 $fa = 5; //5  minimum=0.01
-$fs = 1; //0.1  minimum=0.01
+$fs = 0.1; //0.1  minimum=0.01
 
 /////base params
 R = 24;
@@ -30,9 +30,10 @@ l_outp_length = 2.9;
 
 /////motor shaft
 d_motshaft = 5;
-l_motshaft = 8;//13;
+l_motshaft = 7;
 l_motshafthld = l_motshaft+7;
 l_motecceshaft = l_motshaft+11.7;
+l_motecce_fr = 0.5;
 
 d_shaftholder = 10;
 
@@ -50,7 +51,7 @@ ROTER2OUTERPIN_GAP = 0.15;
 l_bottomplate_h = 4;
 
 /////lid-plate
-l_lidspacer_h = 2;
+l_lidspacer_h = 2.5;
 
 /////output-roter
 d_output_hole = (d_outp_diameter/2 + l)*2;
