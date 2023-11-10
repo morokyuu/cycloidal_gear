@@ -10,8 +10,21 @@ module roter(){
 module output_pins(){
     for(deg = [th_outp_angle : 360/4 : 360]){
         rotate([0,0,deg])
-        translate([d_outp_position/2,0,0])
-        cylinder(h=l_roter_thick+5,r=d_outp_diameter/2);
+        translate([d_outp_position/2,0,0]){
+            //pole
+            cylinder(h=l_roter_thick+l_outp_length,r=d_outp_diameter/2);
+            //step
+            cylinder(h=l_roter_thick+l_outp_step_h,r=d_outp_diameter/2+3.8);
+        }
+    }
+}
+
+module bearing_hole(){
+    union(){
+        cylinder(h=l_roter_thick,r=d_eccebearing/2+tr_bearing_hole);
+        //frange
+        translate([0,0,l_roter_thick-l_eccebearing_fr])
+        cylinder(h=1,r=d_eccebearing_fr/2);
     }
 }
 
@@ -20,6 +33,5 @@ difference(){
         roter();
         output_pins();
     };
-    //bearing hole
-    cylinder(h=l_roter_thick,r=d_eccebearing/2);
+    bearing_hole();
 };
